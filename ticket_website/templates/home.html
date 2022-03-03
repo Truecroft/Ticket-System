@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %} Home {% endblock %}
+
+{% block content %}
+<h1>Please select what you would like to do</h1>
+
+<div class="container">
+    <div class="card-deck">
+        <div class="card text-center border-dark mb-3">
+            <div class="card-header">Create Ticket</div>
+            <div class="card-body">
+                <p class="card-text">Raise a new Ticket for Service Desk.</p>
+                <a href="{{ url_for('tickets.create_ticket') }}" class="btn btn-primary">Create New Ticket</a>
+            </div>
+        </div>
+        <div class="card text-center border-dark mb-3">
+            <div class="card-header">View Open Tickets</div>
+            <div class="card-body">
+                <p class="card-text">View all tickets which you have created.</p>
+                <a href="{{ url_for('tickets.view_tickets', status='open') }}" class="btn btn-primary">View Tickets</a>
+            </div>
+        </div>
+        <div class="card text-center border-dark mb-3">
+            <div class="card-header">View All Tickets</div>
+            <div class="card-body">
+                <p class="card-text">View all tickets which you have created.</p>
+                <a href="{{ url_for('tickets.view_tickets', status='all') }}" class="btn btn-primary">View Tickets</a>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<div class="container">
+    <h2>Ticket Information for {{ current_user.first_name }} </h2>
+    <div class="card-deck">
+    {% for status, count in ticket_count_dict.items() %}
+        {% if status == 'Open' %}
+            <div class="card text-center border-primary mb-2">
+        {% elif status == 'In Progress' %}
+            <div class="card text-center border-warning mb-2">
+        {% elif status == 'Resolved' %}
+            <div class="card text-center border-success mb-2">
+        {% elif status == 'Closed' %}
+            <div class="card text-center border-danger mb-2">
+        {% endif %}
+            <div class="card-header">
+            <h3 class="card-title">{{ status }}</h3>
+            </div>
+            <div class="card-body">
+            <h5 class="card-title">{{ count }} </h5>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+</div>
+
+{% endblock %} 
