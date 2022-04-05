@@ -32,8 +32,15 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                   <a class="dropdown-item" href="{{ url_for('tickets.create_ticket') }}">Create Ticket</a>
-                  <a class="dropdown-item" href="{{ url_for('tickets.view_tickets', status='open') }}">View Open Tickets</a>
+                  {% if current_user.is_admin %}
+                  <a class="dropdown-item" href="{{ url_for('tickets.view_open_tickets') }}">View Open Tickets</a>
+                  <a class="dropdown-item" href="{{ url_for('admin.view_assigned_tickets') }}">View All Assigned Tickets</a>
+                  <a class="dropdown-item" href="{{ url_for('admin.view_admin_tickets', status='all') }}">View All Tickets</a>
+                  {% else %}
+                  <a class="dropdown-item" href="{{ url_for('tickets.view_open_tickets') }}">View Open Tickets</a>
                   <a class="dropdown-item" href="{{ url_for('tickets.view_tickets', status='all') }}">View All Tickets</a>
+                  {% endif %}
+                  
                 </div>
               </li>
               {% if current_user.is_admin %}
@@ -43,7 +50,8 @@
                   </a>
                   <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                     <a class="dropdown-item" href="{{ url_for('admin.create_new_user') }}">Create new User</a>
-                    <a class="dropdown-item" href="{{ url_for('tickets.view_tickets', status='open') }}">View all Users</a>
+                    <a class="dropdown-item" href="{{ url_for('admin.view_regular_users') }}">View Regular Users</a>
+                    <a class="dropdown-item" href="{{ url_for('admin.view_admin_users') }}">View Admin Users</a>
                   </div>
                 </li>
               {% endif %}

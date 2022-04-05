@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
 
-{% block title %} View Ticket {% endblock %}
+{% block title %} View Admin Tickets {% endblock %}
 
 {% block content %}
 
@@ -9,11 +9,11 @@
 <br />
 
 <h3>Filter by ticket status</h3>
-<a href="{{ url_for('tickets.view_tickets', status = 'Open' ) }}" class="btn btn-primary">Open</a>
-<a href="{{ url_for('tickets.view_tickets', status = 'In Progress' ) }}" class="btn btn-primary">In Progress</a>
-<a href="{{ url_for('tickets.view_tickets', status = 'Resolved' ) }}" class="btn btn-primary">Resolved</a>
-<a href="{{ url_for('tickets.view_tickets', status = 'Closed' ) }}" class="btn btn-primary">Closed</a>
-<a href="{{ url_for('tickets.view_tickets', status='all' ) }}" class="btn btn-danger">Reset</a>
+<a href="{{ url_for('admin.view_admin_tickets', status='Open' ) }}" class="btn btn-primary">Open</a>
+<a href="{{ url_for('admin.view_admin_tickets', status='In Progress' ) }}" class="btn btn-primary">In Progress</a>
+<a href="{{ url_for('admin.view_admin_tickets', status='Resolved' ) }}" class="btn btn-primary">Resolved</a>
+<a href="{{ url_for('admin.view_admin_tickets', status='Closed' ) }}" class="btn btn-primary">Closed</a>
+<a href="{{ url_for('admin.view_admin_tickets', status='all' ) }}" class="btn btn-danger">Reset</a>
 <br />
 {% for ticket in tickets %}
 <br />
@@ -50,7 +50,7 @@
                             {% if ticket.assigned_to == null or ticket.assigned_to == None %}
                                 <td>Unassigned</td>
                             {% else %}
-                                <td>{{ ticket.assigned_to }}</td>
+                                <td>{{ ticket.assigned_to.first_name + " " + ticket.assigned_to.last_name }}</td>
                             {% endif %}
                             <td>{{ ticket.contact_number }}</td>
                             <td>{{ ticket.affected_item }}</td>
@@ -67,13 +67,13 @@
                 </tbody>
                 </table>
             </div>
-            <a href="{{ url_for('tickets.edit_ticket', ticket_id = ticket.id ) }}" class="btn btn-primary">Edit Ticket</a>
-            {% if ticket.status == 'Open' or ticket.status == 'In Progress' %}
-                <a href="{{ url_for('tickets.change_ticket_status', ticket_id = ticket.id, status = 'Resolved' ) }}" class="btn btn-primary">Resolve Ticket</a>
-                <a href="{{ url_for('tickets.change_ticket_status', ticket_id = ticket.id, status = 'Closed' ) }}" class="btn btn-primary">Close Ticket</a>
-            {% elif ticket.status == 'Resolved' %}
-                <a href="{{ url_for('tickets.change_ticket_status', ticket_id = ticket.id, status = 'Closed' ) }}" class="btn btn-primary">Close Ticket</a>
+            {% if not current_user.id == ticket.assigned_to_id %}
+                <a href="{{ url_for('admin.assign_ticket', ticket_id = ticket.id ) }}" class="btn btn-primary">Assign To Me</a>
+            {% else %}
+                <a href="{{ url_for('admin.unassign_ticket', ticket_id = ticket.id ) }}" class="btn btn-primary">Unassign</a>
             {% endif %}
+            <a href="{{ url_for('admin.edit_ticket_admin', ticket_id = ticket.id ) }}" class="btn btn-primary">Edit Ticket</a>
+            <a href="{{ url_for('admin.delete_ticket', ticket_id = ticket.id ) }}" class="btn btn-primary">Delete Ticket</a>
         </div>
     </div>
 </div>

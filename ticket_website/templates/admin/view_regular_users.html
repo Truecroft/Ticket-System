@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %} View Non-Admin Users {% endblock %}
+
+{% block content %}
+
+<h1>Showing all Non-Admin Users that have signed up.</h1>
+<br />
+
+{% for user in users %}
+<br />
+<div class="container">
+    <div class="card border-secondary">
+        <div class="card-body text-center">
+            <h4 class="card-title">{{ user.first_name + " " + user.last_name }}</h4>
+            <div class="table-responsive">
+                <table class="table">
+                <thead class="thead">
+                    <tr background-colour="#005eb8">
+                        <th scope="col">User ID</th>
+                        <th scope="col">First Name</th>
+                        <th scope="col">Last Name</th>
+                        <th scope="col">Email</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th>{{ user.id }} </th>
+                            <td>{{ user.first_name }}</td>
+                            <td>{{ user.last_name }}</td>
+                            <td>{{ user.email }}</td>
+                        </tr>
+                </tbody>
+                </table>
+            </div>
+            <a href="{{ url_for('admin.edit_user', user_id = user.id ) }}" class="btn btn-primary">Edit User</a>
+            <a href="{{ url_for('admin.delete_user', user_id = user.id ) }}" class="btn btn-primary">Delete User</a>
+        </div>
+    </div>
+</div>
+<br />
+{% endfor %}
+{% endblock %}

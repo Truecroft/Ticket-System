@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %} Home {% endblock %}
+
+{% block content %}
+<h1>Admin home page</h1>
+
+<div class="container">
+    <div class="card-deck">
+        <div class="card text-center border-dark mb-3">
+            <div class="card-header">Create Ticket</div>
+            <div class="card-body">
+                <p class="card-text">Raise a new Ticket for Service Desk.</p>
+                <a href="{{ url_for('tickets.create_ticket') }}" class="btn btn-primary">Create New Ticket</a>
+            </div>
+        </div>
+        <div class="card text-center border-dark mb-3">
+            <div class="card-header">View Open Tickets</div>
+            <div class="card-body">
+                <p class="card-text">View all tickets which you have created.</p>
+                <a href="{{ url_for('tickets.view_open_tickets') }}" class="btn btn-primary">View Open Tickets</a>
+            </div>
+        </div>
+        <div class="card text-center border-dark mb-3">
+            <div class="card-header">View Assigned Tickets</div>
+            <div class="card-body">
+                <p class="card-text">View all tickets which are assigned to yourself.</p>
+                <a href="{{ url_for('admin.view_assigned_tickets') }}" class="btn btn-primary">View Assigned Tickets</a>
+            </div>
+        </div>
+        <div class="card text-center border-dark mb-3">
+            <div class="card-header">View All Tickets</div>
+            <div class="card-body">
+                <p class="card-text">View all tickets which have been created for Service Desk.</p>
+                <a href="{{ url_for('admin.view_admin_tickets', status='all') }}" class="btn btn-primary">View Tickets</a>
+            </div>
+        </div>
+    </div>
+    <div class="card-deck">
+        <div class="card text-center border-dark mb-3">
+            <div class="card-header">Create User</div>
+            <div class="card-body">
+                <p class="card-text">Create a new user for the system.</p>
+                <a href="{{ url_for('admin.create_new_user') }}" class="btn btn-primary">Create New User</a>
+            </div>
+        </div>
+        <div class="card text-center border-dark mb-3">
+            <div class="card-header">View Regular Users</div>
+            <div class="card-body">
+                <p class="card-text">View all Non-Admin Users within the system.</p>
+                <a href="{{ url_for('admin.view_regular_users') }}" class="btn btn-primary">View Regular Users</a>
+            </div>
+        </div>
+        <div class="card text-center border-dark mb-3">
+            <div class="card-header">View Admin Users</div>
+            <div class="card-body">
+                <p class="card-text">View all Admin Users within the system.</p>
+                <a href="{{ url_for('admin.view_admin_users') }}" class="btn btn-primary">View Admin Users</a>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+{% endblock %} 

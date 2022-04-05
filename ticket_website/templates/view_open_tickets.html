@@ -1,32 +1,18 @@
 {% extends "base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
 
-{% block title %} View Ticket {% endblock %}
+{% block title %} View Open Tickets {% endblock %}
 
 {% block content %}
 
 <h1>Showing all created tickets for {{ current_user.first_name }} </h1>
 <br />
 
-<h3>Filter by ticket status</h3>
-<a href="{{ url_for('tickets.view_tickets', status = 'Open' ) }}" class="btn btn-primary">Open</a>
-<a href="{{ url_for('tickets.view_tickets', status = 'In Progress' ) }}" class="btn btn-primary">In Progress</a>
-<a href="{{ url_for('tickets.view_tickets', status = 'Resolved' ) }}" class="btn btn-primary">Resolved</a>
-<a href="{{ url_for('tickets.view_tickets', status = 'Closed' ) }}" class="btn btn-primary">Closed</a>
-<a href="{{ url_for('tickets.view_tickets', status='all' ) }}" class="btn btn-danger">Reset</a>
 <br />
 {% for ticket in tickets %}
 <br />
 <div class="container">
-    {% if ticket.status == 'Open' %}
-        <div class="card border-primary">
-    {% elif ticket.status == 'In Progress' %}
-        <div class="card border-warning">
-    {% elif ticket.status == 'Resolved' %}
-        <div class="card border-success">
-    {% elif ticket.status == 'Closed' %}
-        <div class="card border-danger">
-    {% endif %}
+    <div class="card border-primary">
         <div class="card-body text-center">
             <h4 class="card-title">{{ ticket.title }}</h4>
             <div class="table-responsive">
@@ -50,19 +36,11 @@
                             {% if ticket.assigned_to == null or ticket.assigned_to == None %}
                                 <td>Unassigned</td>
                             {% else %}
-                                <td>{{ ticket.assigned_to }}</td>
+                                <td>{{ ticket.assigned_to.first_name + " " + ticket.assigned_to.last_name }}</td>
                             {% endif %}
                             <td>{{ ticket.contact_number }}</td>
                             <td>{{ ticket.affected_item }}</td>
-                            {% if ticket.status == 'Open' %}
-                                <td class="bg-info"> {{ ticket.status }} </td>
-                            {% elif ticket.status == 'In Progress' %}
-                                <td class="bg-warning"> {{ ticket.status }} </td>
-                            {% elif ticket.status == 'Resolved' %}
-                                <td class="bg-success"> {{ ticket.status }} </td>
-                            {% elif ticket.status == 'Closed' %}
-                                <td class="bg-danger"> {{ ticket.status }} </td>
-                            {% endif %}
+                            <td class="bg-info"> {{ ticket.status }} </td>
                         </tr>
                 </tbody>
                 </table>

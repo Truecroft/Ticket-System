@@ -1,5 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, IntegerField, TextAreaField, RadioField, PasswordField
+from sqlalchemy import false, true
+from wtforms import StringField, IntegerField, TextAreaField, RadioField, PasswordField, SelectField
 from wtforms.validators import DataRequired, Email, EqualTo
 
 class CreateUser(FlaskForm):
@@ -14,9 +15,18 @@ class CreateUser(FlaskForm):
     
     user_status = RadioField('Is this User an Admin', choices=[(True, 'Yes'), (False,'No')])
 
+
 class EditTicket(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
     description = TextAreaField('Description', validators=[DataRequired()])
     contact_number = IntegerField('Contact Number', validators=[DataRequired()])
     affected_item = StringField('Affected Item', validators=[DataRequired()])
-    # status = SelectField('Programming Language', choices=[('open', 'Open'), ('resolved', 'Resolved'), ('closed', 'Closed')])
+    status = SelectField('Status', 
+        choices=[('Open', 'Open'), ('In Progress', 'In Progress'), ('Resolved', 'Resolved'), ('Closed', 'Closed')])
+
+
+class EditUser(FlaskForm):
+    email = StringField('Email', validators=[DataRequired(), Email()], render_kw={"placeholder": "john@doe.com"})
+    first_name = StringField('First Name', validators=[DataRequired()], render_kw={"placeholder": "John"})
+    last_name = StringField('Last Name', validators=[DataRequired()], render_kw={"placeholder": "Doe"})    
+    user_status = RadioField('Is this User an Admin', choices=[(True, 'Yes'), (False,'No')], default=False)
