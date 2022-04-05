@@ -12,7 +12,17 @@ def create_app():
     Bootstrap(app)
 
     app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
-    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
+
+    # This DB_URI Section below is to fix a bug within the heroku Database_Url which it returns.
+    # SqlAlchemy versions > 1.4 (I am using 2.5.1) requires the database url to be prefixed with
+    # postgresql:// instead of postgres://
+    # The fix was found from the Heroku website
+    # https://help.heroku.com/ZKNTJQSK/why-is-sqlalchemy-1-4-x-not-connecting-to-heroku-postgres
+    
+    DB_URI = os.environ.get('DATABASE_URL')
+    if DB_URI.startswith("postgres://"):
+        DB_URI = DB_URI.replace("postgres://", "postgresql://", 1)
+    app.config['SQLALCHEMY_DATABASE_URI'] = DB_URI
 
     db.init_app(app)
 
