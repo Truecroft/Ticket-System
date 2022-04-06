@@ -18,7 +18,7 @@ def assign_ticket_helper(ticket_id):
 
 def unassign_ticket_helper(ticket_id):
     ticket = Ticket.query.filter_by(id=ticket_id).first()
-    ticket.assigned_to_id = -1
+    ticket.assigned_to_id = None
     db.session.commit()
 
 
