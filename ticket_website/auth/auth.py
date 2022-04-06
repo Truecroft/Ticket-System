@@ -29,7 +29,7 @@ def signup():
             flash('Passwords Must match', category='error')
 
         else:
-            is_admin = False
+            is_admin = True
             hashed_password = generate_password_hash(password, method='sha256')
 
             new_user = User(email=email,
