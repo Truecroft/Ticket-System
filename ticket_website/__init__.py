@@ -45,8 +45,11 @@ def create_app():
     login_manager.init_app(app)
 
     @login_manager.user_loader
-    def load_user(id):
-        return User.query.get(int(id))
+    def load_user(user_id):
+        try:
+            return User.query.get(user_id)
+        except:
+            return None
 
     return app
 
