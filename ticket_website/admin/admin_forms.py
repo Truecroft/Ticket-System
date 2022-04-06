@@ -13,7 +13,7 @@ class CreateUser(FlaskForm):
         validators=[DataRequired(), EqualTo('confirm_password', message='Passwords Must Match')], 
         render_kw={"placeholder": "Confirm Password"})
     
-    user_status = SelectField('Is this User an Admin', choices=[('admin', 'Admin User'), ('regular', 'Regular User')])
+    user_status = SelectField('Is this User an Admin', choices=[('admin', 'Admin User'), ('regular', 'Regular User')], validate=False)
 
 
 class EditTicket(FlaskForm):
@@ -29,4 +29,4 @@ class EditUser(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()], render_kw={"placeholder": "john@doe.com"})
     first_name = StringField('First Name', validators=[DataRequired()], render_kw={"placeholder": "John"})
     last_name = StringField('Last Name', validators=[DataRequired()], render_kw={"placeholder": "Doe"})    
-    user_status = SelectField('Is this User an Admin', choices=[('admin', 'Admin User'), ('regular', 'Regular User')])
+    user_status = SelectField('Is this User an Admin', choices=[('admin', 'Admin User'), ('regular', 'Regular User')], validate=False)
