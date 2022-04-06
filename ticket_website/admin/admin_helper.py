@@ -1,6 +1,5 @@
 from flask import flash, redirect, url_for
 from flask_login import current_user
-from sqlalchemy import null
 from ticket_website import db
 from ticket_website.models import Ticket, User
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -63,7 +62,7 @@ def create_new_user_helper(form_data):
 
     else:
         hashed_password = generate_password_hash(password, method='sha256')
-        if user_status == "True":
+        if user_status == "admin":
             is_admin = True
         else:
             is_admin = False 
@@ -90,7 +89,7 @@ def edit_user_info(ticket, form):
     ticket.first_name = form.get('first_name')
     ticket.last_name = form.get('last_name')
     ticket.email = form.get('email')
-    if form.get('user_status') == "True":
+    if form.get('user_status') == "admin":
         is_admin = True
     else:
         is_admin = False 
