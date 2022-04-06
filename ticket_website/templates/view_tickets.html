@@ -50,7 +50,7 @@
                             {% if ticket.assigned_to == null or ticket.assigned_to == None %}
                                 <td>Unassigned</td>
                             {% else %}
-                                <td>{{ ticket.assigned_to }}</td>
+                                <td>{{ ticket.assigned_to.first_name + " " + ticket.assigned_to.last_name }}</td>
                             {% endif %}
                             <td>{{ ticket.contact_number }}</td>
                             <td>{{ ticket.affected_item }}</td>
