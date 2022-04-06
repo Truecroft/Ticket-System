@@ -1,9 +1,10 @@
 from flask import Blueprint, redirect, render_template, url_for
 from flask_login import login_required, current_user
-
 from .main_helper import ticket_count_dict_helper
 
+
 routes = Blueprint('routes', __name__)
+
 
 @routes.route('/')
 @login_required

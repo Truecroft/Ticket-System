@@ -4,9 +4,9 @@ from flask_login import LoginManager
 from flask_bootstrap import Bootstrap
 from flask_wtf.csrf import CSRFProtect
 import os
-from os import path
 
 db = SQLAlchemy()
+
 
 def create_app():
     app = Flask(__name__)
@@ -39,7 +39,7 @@ def create_app():
     app.register_blueprint(auth, url_prefix='/')
     app.register_blueprint(tickets, url_prefix='/')
     app.register_blueprint(admin, url_prefix='/')
-    
+
     from ticket_website.models import User, Ticket
 
     create_database(app)
@@ -56,6 +56,7 @@ def create_app():
             return None
 
     return app
+
 
 def create_database(app):
     db.create_all(app=app)

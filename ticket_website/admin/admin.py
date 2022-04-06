@@ -4,15 +4,17 @@ from .admin_forms import CreateUser, EditTicket, EditUser
 from .admin_helper import *
 from ticket_website.models import Ticket, User
 
+
 admin = Blueprint('admin', __name__)
+
 
 @admin.route('/admin-home', methods=['GET', 'POST'])
 @login_required
 def admin_home():
     if not current_user.is_admin:
-        flash(f"You must be an admin to view that page. Returning to the Home page.", category='error')
+        flash("You must be an admin to view that page. Returning to the Home page.", category='error')
         return redirect(url_for('routes.home'))
-        
+
     tickets = Ticket.query.filter_by(created_by_id=current_user.get_id(), status="Open").all()
     return render_template('admin/admin_home.html', tickets=tickets)
 
@@ -21,7 +23,7 @@ def admin_home():
 @login_required
 def create_new_user():
     if not current_user.is_admin:
-        flash(f"You must be an admin to view that page. Returning to the Home page.", category='error')
+        flash("You must be an admin to view that page. Returning to the Home page.", category='error')
         return redirect(url_for('routes.home'))
 
     form = CreateUser(request.form)
@@ -35,7 +37,7 @@ def create_new_user():
 @login_required
 def view_regular_users():
     if not current_user.is_admin:
-        flash(f"You must be an admin to view that page. Returning to the Home page.", category='error')
+        flash("You must be an admin to view that page. Returning to the Home page.", category='error')
         return redirect(url_for('routes.home'))
 
     users = User.query.filter_by(is_admin=False).all()
@@ -47,7 +49,7 @@ def view_regular_users():
 @login_required
 def edit_user(user_id):
     if not current_user.is_admin:
-        flash(f"You must be an admin to view that page. Returning to the Home page.", category='error')
+        flash("You must be an admin to view that page. Returning to the Home page.", category='error')
         return redirect(url_for('routes.home'))
 
     form = EditUser(request.form)
@@ -66,7 +68,7 @@ def edit_user(user_id):
 @login_required
 def delete_user(user_id):
     if not current_user.is_admin:
-        flash(f"You must be an admin to view that page. Returning to the Home page.", category='error')
+        flash("You must be an admin to view that page. Returning to the Home page.", category='error')
         return redirect(url_for('routes.home'))
 
     delete_user_helper(user_id)
@@ -78,7 +80,7 @@ def delete_user(user_id):
 @login_required
 def view_admin_users():
     if not current_user.is_admin:
-        flash(f"You must be an admin to view that page. Returning to the Home page.", category='error')
+        flash("You must be an admin to view that page. Returning to the Home page.", category='error')
         return redirect(url_for('routes.home'))
 
     users = User.query.filter_by(is_admin=True).all()
@@ -89,13 +91,13 @@ def view_admin_users():
 @login_required
 def view_admin_tickets(status):
     if not current_user.is_admin:
-        flash(f"You must be an admin to view that page. Returning to the Home page.", category='error')
+        flash("You must be an admin to view that page. Returning to the Home page.", category='error')
         return redirect(url_for('routes.home'))
 
     if status == 'all':
         tickets = Ticket.query.all()
         if len(tickets) < 1:
-            flash(f"There are no tickets available. Returning to the Home page.", category='error')
+            flash("There are no tickets available. Returning to the Home page.", category='error')
             return redirect(url_for('admin.admin_home'))
     else:
         tickets = Ticket.query.filter_by(status=status).all()
@@ -111,13 +113,13 @@ def view_admin_tickets(status):
 @login_required
 def view_assigned_tickets():
     if not current_user.is_admin:
-        flash(f"You must be an admin to view that page. Returning to the Home page.", category='error')
+        flash("You must be an admin to view that page. Returning to the Home page.", category='error')
         return redirect(url_for('routes.home'))
 
     tickets = Ticket.query.filter_by(assigned_to_id=current_user.get_id()).all()
 
     if len(tickets) < 1:
-        flash(f"You currently have no tickets assigned to yourself. Returning to Home Page", category='error')
+        flash("You currently have no tickets assigned to yourself. Returning to Home Page", category='error')
         return redirect(url_for('admin.admin_home'))
 
     return render_template('admin/admin_view_tickets.html', tickets=tickets)
@@ -127,7 +129,7 @@ def view_assigned_tickets():
 @login_required
 def delete_ticket(ticket_id):
     if not current_user.is_admin:
-        flash(f"You must be an admin to view that page. Returning to the Home page.", category='error')
+        flash("You must be an admin to view that page. Returning to the Home page.", category='error')
         return redirect(url_for('routes.home'))
 
     delete_ticket_helper(ticket_id)
@@ -138,7 +140,7 @@ def delete_ticket(ticket_id):
 @login_required
 def assign_ticket(ticket_id):
     if not current_user.is_admin:
-        flash(f"You must be an admin to view that page. Returning to the Home page.", category='error')
+        flash("You must be an admin to view that page. Returning to the Home page.", category='error')
         return redirect(url_for('routes.home'))
 
     assign_ticket_helper(ticket_id)
@@ -150,7 +152,7 @@ def assign_ticket(ticket_id):
 @login_required
 def unassign_ticket(ticket_id):
     if not current_user.is_admin:
-        flash(f"You must be an admin to view that page. Returning to the Home page.", category='error')
+        flash("You must be an admin to view that page. Returning to the Home page.", category='error')
         return redirect(url_for('routes.home'))
 
     unassign_ticket_helper(ticket_id)
@@ -162,9 +164,9 @@ def unassign_ticket(ticket_id):
 @login_required
 def edit_ticket_admin(ticket_id):
     if not current_user.is_admin:
-        flash(f"You must be an admin to view that page. Returning to the Home page.", category='error')
+        flash("You must be an admin to view that page. Returning to the Home page.", category='error')
         return redirect(url_for('routes.home'))
-         
+
     form = EditTicket(request.form)
     ticket = Ticket.query.filter_by(id=ticket_id).first()
 

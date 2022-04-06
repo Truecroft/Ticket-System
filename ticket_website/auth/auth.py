@@ -3,15 +3,17 @@ from .auth_forms import SignupForm, LoginForm
 from ticket_website.models import User
 from ticket_website import db
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_login import login_user, login_required, logout_user, current_user
+from flask_login import login_user, login_required, logout_user
+
 
 auth = Blueprint('auth', __name__)
+
 
 @auth.route('/signup', methods=['GET', 'POST'])
 def signup():
     form = SignupForm(request.form)
     if request.method == 'POST' and form.validate_on_submit():
-        email =  request.form.get('email')
+        email = request.form.get('email')
         first_name = request.form.get('first_name')
         last_name = request.form.get('last_name')
         password = request.form.get('password')
@@ -21,7 +23,7 @@ def signup():
         if user:
             flash('Email already exists, please login', category='error')
             return redirect(url_for('auth.login'))
-        
+
         elif len(email) < 4:
             flash('Email must be greater than 4 characters.', category='error')
 
@@ -33,9 +35,9 @@ def signup():
             hashed_password = generate_password_hash(password, method='sha256')
 
             new_user = User(email=email,
-             password=hashed_password, 
-             first_name=first_name, 
-             last_name=last_name, 
+             password=hashed_password,
+             first_name=first_name,
+             last_name=last_name,
              is_admin=is_admin)
 
             db.session.add(new_user)

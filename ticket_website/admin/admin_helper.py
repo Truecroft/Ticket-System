@@ -2,7 +2,7 @@ from flask import flash, redirect, url_for
 from flask_login import current_user
 from ticket_website import db
 from ticket_website.models import Ticket, User
-from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.security import generate_password_hash
 
 
 def delete_ticket_helper(ticket_id):
@@ -42,7 +42,7 @@ def edit_ticket_info(ticket, form):
 
 
 def create_new_user_helper(form_data):
-    email =  form_data.get('email')
+    email = form_data.get('email')
     first_name = form_data.get('first_name')
     last_name = form_data.get('last_name')
     password = form_data.get('password')
@@ -53,7 +53,7 @@ def create_new_user_helper(form_data):
     if user:
         flash('Email already exists', category='error')
         return redirect(url_for('admin.admin_home'))
-    
+
     elif len(email) < 4:
         flash('Email must be greater than 4 characters.', category='error')
 
@@ -65,12 +65,12 @@ def create_new_user_helper(form_data):
         if user_status == "True":
             is_admin = True
         else:
-            is_admin = False 
+            is_admin = False
 
         new_user = User(email=email,
-            password=hashed_password, 
-            first_name=first_name, 
-            last_name=last_name, 
+            password=hashed_password,
+            first_name=first_name,
+            last_name=last_name,
             is_admin=is_admin)
 
         db.session.add(new_user)
@@ -92,7 +92,7 @@ def edit_user_info(ticket, form):
     if form.get('user_status') == "True":
         is_admin = True
     else:
-        is_admin = False 
+        is_admin = False
     ticket.is_admin = is_admin
 
     db.session.commit()
@@ -100,4 +100,4 @@ def edit_user_info(ticket, form):
 
 def delete_user_helper(user_id):
     User.query.filter_by(id=user_id).delete()
-    db.session.commit() 
+    db.session.commit()

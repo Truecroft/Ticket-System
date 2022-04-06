@@ -1,6 +1,7 @@
 from ticket_website import db
 from flask_login import UserMixin
 
+
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
 
@@ -12,7 +13,8 @@ class User(db.Model, UserMixin):
     is_admin = db.Column(db.Boolean)
 
     def is_active(self):
-        return super().is_active 
+        return super().is_active
+
 
 class Ticket(db.Model):
     __tablename__ = 'tickets'
