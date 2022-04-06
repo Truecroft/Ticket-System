@@ -10,6 +10,8 @@ db = SQLAlchemy()
 
 def create_app():
     app = Flask(__name__)
+    csrf = CsrfProtect(app)
+    csrf.init_app(app)
     Bootstrap(app)
 
     app.config['SECRET_KEY'] = os.urandom(24)
@@ -24,8 +26,6 @@ def create_app():
     if DB_URI.startswith("postgres://"):
         DB_URI = DB_URI.replace("postgres://", "postgresql://", 1)
     app.config['SQLALCHEMY_DATABASE_URI'] = DB_URI
-
-    CsrfProtect(app)
 
     db.init_app(app)
 
