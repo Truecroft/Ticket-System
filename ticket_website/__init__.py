@@ -2,6 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_bootstrap import Bootstrap
+from flask_wtf.csrf import CsrfProtect
 import os
 from os import path
 
@@ -23,6 +24,8 @@ def create_app():
     if DB_URI.startswith("postgres://"):
         DB_URI = DB_URI.replace("postgres://", "postgresql://", 1)
     app.config['SQLALCHEMY_DATABASE_URI'] = DB_URI
+
+    CsrfProtect(app)
 
     db.init_app(app)
 
