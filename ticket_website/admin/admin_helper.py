@@ -62,7 +62,7 @@ def create_new_user_helper(form_data):
 
     else:
         hashed_password = generate_password_hash(password, method='sha256')
-        if user_status == "admin":
+        if user_status == "True":
             is_admin = True
         else:
             is_admin = False 
@@ -89,7 +89,7 @@ def edit_user_info(ticket, form):
     ticket.first_name = form.get('first_name')
     ticket.last_name = form.get('last_name')
     ticket.email = form.get('email')
-    if form.get('user_status') == "admin":
+    if form.get('user_status') == "True":
         is_admin = True
     else:
         is_admin = False 
