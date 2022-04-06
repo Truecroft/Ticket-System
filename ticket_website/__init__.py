@@ -26,6 +26,7 @@ def create_app():
     if DB_URI.startswith("postgres://"):
         DB_URI = DB_URI.replace("postgres://", "postgresql://", 1)
     app.config['SQLALCHEMY_DATABASE_URI'] = DB_URI
+    app.config['SESSION_COOKIE_SECURE'] = False
 
     db.init_app(app)
 
