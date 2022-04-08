@@ -2,6 +2,7 @@ from ticket_website import db
 from ticket_website.models import Ticket
 
 
+# Helper to populate the edit ticket form on the edit ticket webpage
 def populate_edit_ticket_form(form, ticket_data):
     form.title.data = ticket_data.title
     form.description.data = ticket_data.description
@@ -10,6 +11,7 @@ def populate_edit_ticket_form(form, ticket_data):
     return form
 
 
+# Helper to create a new ticket and add it to the database
 def create_new_ticket(form, user_id):
     title = form.get('title')
     description = form.get('description')
@@ -28,6 +30,7 @@ def create_new_ticket(form, user_id):
     db.session.commit()
 
 
+# Helper to edit the ticket info and add it to the database
 def edit_ticket_info(ticket, form):
     ticket.title = form.get('title')
     ticket.description = form.get('description')
@@ -36,6 +39,7 @@ def edit_ticket_info(ticket, form):
     db.session.commit()
 
 
+# Helper to update the ticket status in the database
 def update_ticket_status(ticket_id, status):
     ticket = Ticket.query.filter_by(id=ticket_id).first()
     ticket.status = status

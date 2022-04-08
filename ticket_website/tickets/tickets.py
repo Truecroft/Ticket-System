@@ -8,6 +8,7 @@ from ticket_website.models import Ticket
 tickets = Blueprint('tickets', __name__)
 
 
+# Endpoint to be accessed when a user wants to create a ticket
 @tickets.route('/create-ticket', methods=['GET', 'POST'])
 @login_required
 def create_ticket():
@@ -22,6 +23,7 @@ def create_ticket():
     return render_template('create_ticket.html', form=form)
 
 
+# Endpoint for when a user wants to view their created tickets
 @tickets.route('/view-tickets/<status>', methods=['GET', 'POST'])
 @login_required
 def view_tickets(status):
@@ -39,6 +41,7 @@ def view_tickets(status):
     return render_template("view_tickets.html", tickets=tickets, status=status)
 
 
+# Endpoint for a user to view their open tickets
 @tickets.route('/view-open-tickets', methods=['GET', 'POST'])
 @login_required
 def view_open_tickets():
@@ -50,6 +53,7 @@ def view_open_tickets():
     return render_template("view_open_tickets.html", tickets=tickets)
 
 
+# Endpoint for a user to edit a ticket with the specified ticket_id
 @tickets.route('/edit-ticket/<ticket_id>', methods=['GET', 'POST'])
 @login_required
 def edit_ticket(ticket_id):
@@ -66,6 +70,7 @@ def edit_ticket(ticket_id):
     return render_template("edit_ticket.html", form=form)
 
 
+# Endpoint for a user to update the ticket status of the specified ticket_id
 @tickets.route('/change-ticket-status/<ticket_id>/<status>')
 @login_required
 def change_ticket_status(ticket_id, status):
