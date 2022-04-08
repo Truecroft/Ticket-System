@@ -9,6 +9,7 @@ from flask_login import login_user, login_required, logout_user
 auth = Blueprint('auth', __name__)
 
 
+# Endpoint for a user to sign up to the system
 @auth.route('/signup', methods=['GET', 'POST'])
 def signup():
     form = SignupForm(request.form)
@@ -48,6 +49,7 @@ def signup():
     return render_template("signup.html", form=form)
 
 
+# Endpoint for a user to login to the system
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm(request.form)
@@ -70,6 +72,7 @@ def login():
     return render_template("login.html", form=form)
 
 
+# Endpoint to logout of the system
 @auth.route('/logout')
 @login_required
 def logout():
