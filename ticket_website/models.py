@@ -2,6 +2,7 @@ from ticket_website import db
 from flask_login import UserMixin
 
 
+# The user model. This is the model which will be created in the database as the users table
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
 
@@ -16,6 +17,7 @@ class User(db.Model, UserMixin):
         return super().is_active
 
 
+# The tickets model. This is the model which will be created in the database as the tickets table
 class Ticket(db.Model):
     __tablename__ = 'tickets'
 

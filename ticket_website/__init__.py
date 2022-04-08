@@ -9,6 +9,7 @@ db = SQLAlchemy()
 
 
 def create_app():
+    # Create the app and initialise CSRF Tokens and Bootstrap
     app = Flask(__name__)
     csrf = CSRFProtect(app)
     csrf.init_app(app)
@@ -28,6 +29,7 @@ def create_app():
     app.config['SQLALCHEMY_DATABASE_URI'] = DB_URI
     app.config['SESSION_COOKIE_SECURE'] = False
 
+    # Init the Db
     db.init_app(app)
 
     from ticket_website.main.routes import routes
@@ -35,6 +37,7 @@ def create_app():
     from ticket_website.tickets.tickets import tickets
     from ticket_website.admin.admin import admin
 
+    # Import the blueprints for the endpoints
     app.register_blueprint(routes, url_prefix='/')
     app.register_blueprint(auth, url_prefix='/')
     app.register_blueprint(tickets, url_prefix='/')
@@ -42,8 +45,10 @@ def create_app():
 
     from ticket_website.models import User, Ticket
 
+    # Create the required database
     create_database(app)
 
+    # Initialise the loginmanager so users can login
     login_manager = LoginManager()
     login_manager.login_view = 'auth.login'
     login_manager.init_app(app)
@@ -58,6 +63,7 @@ def create_app():
     return app
 
 
+# Function to create the database when the app is first run
 def create_database(app):
     db.create_all(app=app)
     print("Created Database")
