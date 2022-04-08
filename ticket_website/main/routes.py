@@ -6,6 +6,7 @@ from .main_helper import ticket_count_dict_helper
 routes = Blueprint('routes', __name__)
 
 
+# Endpoint for the regular user homepage
 @routes.route('/')
 @login_required
 def home():

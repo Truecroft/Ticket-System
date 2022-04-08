@@ -1,6 +1,7 @@
 from ticket_website.models import Ticket
 
 
+# A helper to create a dictionary to display the amount of tickets with different status'
 def ticket_count_dict_helper(user_id):
     ticket_count_dict = {
         "Open": 0,
