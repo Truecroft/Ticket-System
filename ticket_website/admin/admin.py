@@ -5,9 +5,11 @@ from .admin_helper import *
 from ticket_website.models import Ticket, User
 
 
+# Create the admin blueprint
 admin = Blueprint('admin', __name__)
 
 
+# Endpoint for the Admin Homepage
 @admin.route('/admin-home', methods=['GET', 'POST'])
 @login_required
 def admin_home():
@@ -19,6 +21,7 @@ def admin_home():
     return render_template('admin/admin_home.html', tickets=tickets)
 
 
+# Endpoint for the create a new user page, this uses the create_new_user_helper method
 @admin.route('/create-new-user', methods=['GET', 'POST'])
 @login_required
 def create_new_user():
@@ -33,6 +36,7 @@ def create_new_user():
     return render_template('admin/create_new_user.html', form=form)
 
 
+# Endpoint to view regular users within the system
 @admin.route('/view-regular-users', methods=['GET'])
 @login_required
 def view_regular_users():
@@ -45,6 +49,7 @@ def view_regular_users():
     return render_template('admin/view_regular_users.html', users=users)
 
 
+# Endpoint to edit users
 @admin.route('/edit_user/<user_id>', methods=['GET', 'POST'])
 @login_required
 def edit_user(user_id):
@@ -64,6 +69,7 @@ def edit_user(user_id):
     return render_template('admin/edit_user.html', form=form)
 
 
+# Endpoint to Delete users from the system
 @admin.route('/delete-user/<user_id>', methods=['GET'])
 @login_required
 def delete_user(user_id):
@@ -76,6 +82,7 @@ def delete_user(user_id):
     return redirect(url_for('admin.admin_home'))
 
 
+# Endpoint to view admin users within the system
 @admin.route('/view-admin-users', methods=['GET'])
 @login_required
 def view_admin_users():
@@ -87,6 +94,7 @@ def view_admin_users():
     return render_template('admin/view_admin_users.html', users=users)
 
 
+# Endpoint to view all tickets within the system
 @admin.route('/view-admin-tickets/<status>', methods=['GET', 'POST'])
 @login_required
 def view_admin_tickets(status):
@@ -109,6 +117,7 @@ def view_admin_tickets(status):
     return render_template('admin/admin_view_tickets.html', tickets=tickets, status=status)
 
 
+# Endpoint view tickets which are assigned to the admin logged in
 @admin.route('/view-assigned-tickets', methods=['GET', 'POST'])
 @login_required
 def view_assigned_tickets():
@@ -125,6 +134,7 @@ def view_assigned_tickets():
     return render_template('admin/admin_view_tickets.html', tickets=tickets)
 
 
+# Endpoint to delete a ticket from the system
 @admin.route('/delete-ticket/<ticket_id>', methods=['GET', 'POST'])
 @login_required
 def delete_ticket(ticket_id):
@@ -136,6 +146,7 @@ def delete_ticket(ticket_id):
     return redirect(url_for('admin.view_admin_tickets', status='all'))
 
 
+# Endpoint to assign a ticket to the admin logged in
 @admin.route('/assign-ticket/<ticket_id>', methods=['GET', 'POST'])
 @login_required
 def assign_ticket(ticket_id):
@@ -148,6 +159,7 @@ def assign_ticket(ticket_id):
     return redirect(url_for('admin.view_admin_tickets', status='all'))
 
 
+# Endpoint to unassign a ticket from the assigned admin
 @admin.route('/unassign-ticket/<ticket_id>', methods=['GET', 'POST'])
 @login_required
 def unassign_ticket(ticket_id):
@@ -160,6 +172,7 @@ def unassign_ticket(ticket_id):
     return redirect(url_for('admin.view_admin_tickets', status='all'))
 
 
+# Endpoint to edit the ticket with the specified ticket_id
 @admin.route('/edit-ticket-admin/<ticket_id>', methods=['GET', 'POST'])
 @login_required
 def edit_ticket_admin(ticket_id):

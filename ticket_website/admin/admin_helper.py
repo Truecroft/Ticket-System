@@ -5,23 +5,27 @@ from ticket_website.models import Ticket, User
 from werkzeug.security import generate_password_hash
 
 
+# A helper to delete a ticket from the system
 def delete_ticket_helper(ticket_id):
     Ticket.query.filter_by(id=ticket_id).delete()
     db.session.commit()
 
 
+# A helper to assign an admin to a ticket
 def assign_ticket_helper(ticket_id):
     ticket = Ticket.query.filter_by(id=ticket_id).first()
     ticket.assigned_to_id = current_user.get_id()
     db.session.commit()
 
 
+# A helper to unassign an admin from a ticket
 def unassign_ticket_helper(ticket_id):
     ticket = Ticket.query.filter_by(id=ticket_id).first()
     ticket.assigned_to_id = None
     db.session.commit()
 
 
+# This is a helper to populate the edit ticket form
 def populate_edit_ticket_form(form, ticket_data):
     form.title.data = ticket_data.title
     form.description.data = ticket_data.description
@@ -31,6 +35,7 @@ def populate_edit_ticket_form(form, ticket_data):
     return form
 
 
+# This is a helper which updates the ticket information with a form is submitted
 def edit_ticket_info(ticket, form):
     ticket.title = form.get('title')
     ticket.description = form.get('description')
@@ -41,6 +46,7 @@ def edit_ticket_info(ticket, form):
     db.session.commit()
 
 
+# Helper to create a new user and add to the database
 def create_new_user_helper(form_data):
     email = form_data.get('email')
     first_name = form_data.get('first_name')
@@ -78,6 +84,7 @@ def create_new_user_helper(form_data):
         flash('Account Created', category='success')
 
 
+# Helper to populate the edit user form
 def populate_edit_user_form(form, user_data):
     form.first_name.data = user_data.first_name
     form.last_name.data = user_data.last_name
@@ -85,6 +92,7 @@ def populate_edit_user_form(form, user_data):
     return form
 
 
+# Helper to edit the user information and commit it to the database
 def edit_user_info(ticket, form):
     ticket.first_name = form.get('first_name')
     ticket.last_name = form.get('last_name')
@@ -98,6 +106,7 @@ def edit_user_info(ticket, form):
     db.session.commit()
 
 
+# Helper to delete a user from the database
 def delete_user_helper(user_id):
     User.query.filter_by(id=user_id).delete()
     db.session.commit()

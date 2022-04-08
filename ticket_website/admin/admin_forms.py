@@ -3,6 +3,7 @@ from wtforms import StringField, IntegerField, TextAreaField, PasswordField, Sel
 from wtforms.validators import DataRequired, Email, EqualTo
 
 
+# This is a form which is used when an admin wants to create a new user
 class CreateUser(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()], render_kw={"placeholder": "john@doe.com"})
     first_name = StringField('First Name', validators=[DataRequired()], render_kw={"placeholder": "John"})
@@ -16,6 +17,7 @@ class CreateUser(FlaskForm):
     user_status = RadioField('Is this User an Admin', choices=[(True, 'Admin User'), (False, 'Regular User')], default=False)
 
 
+# This is a form which will be used when an admin wants to edit a ticket
 class EditTicket(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
     description = TextAreaField('Description', validators=[DataRequired()])
@@ -25,6 +27,7 @@ class EditTicket(FlaskForm):
         choices=[('Open', 'Open'), ('In Progress', 'In Progress'), ('Resolved', 'Resolved'), ('Closed', 'Closed')])
 
 
+# This will be used when an admin wants to edit an exisiting user
 class EditUser(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()], render_kw={"placeholder": "john@doe.com"})
     first_name = StringField('First Name', validators=[DataRequired()], render_kw={"placeholder": "John"})
