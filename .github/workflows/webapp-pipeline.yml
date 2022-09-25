@@ -13,6 +13,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - name: Run Bandit
+        uses: tj-actions/bandit@v5.1
+        with:
+          targets: |
+            ticket_website
       - name: Setup Python 3.9
         uses: actions/setup-python@v2
         with:
